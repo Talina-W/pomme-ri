@@ -1,4 +1,4 @@
-# chat-demo（Pomme Ri）前端安全审计报告
+user# chat-demo（Pomme Ri）前端安全审计报告
 
 - 审计对象：`chat-demo`，版本 `0.1.2`，当前工作树（含未提交改动），上游为 `deepseek-ai/chat-demo`
 - 审计时间：2026-11-20
@@ -348,16 +348,16 @@ return [
 Git 历史中的作者/提交者信息会随仓库公开：
 
 ```
-407dd88 | 钱多多 <qianduoduo@qianduoduodeMacBook-Air.local>
-4b6ce2a | 钱多多 <qianduoduo@qianduoduodeMacBook-Air.local>
+407dd88 | YourName <user@userdeYourDevice.local>
+4b6ce2a | YourName <user@userdeYourDevice.local>
 429af5a | brickmaker <zhaoxiaodong@zju.edu.cn>   ← 上游作者
 783829d | brickmaker <zhaoxiaodong@zju.edu.cn>   ← 上游作者
 ```
 
 其中 `brickmaker <zhaoxiaodong@zju.edu.cn>` 来自上游 `deepseek-ai/chat-demo`，本来已公开；**风险在于你自己的两个提交**：
 
-- 暴露真实邮箱（如果 `qianduoduo@...` 与你的常用邮箱一致）；
-- `@qianduoduodeMacBook-Air.local` 泄露设备名和用户名；
+- 暴露真实邮箱（如果 `user@...` 与你的常用邮箱一致）；
+- `@userdeYourDevice.local` 泄露设备名和用户名；
 - 一旦推送到 GitHub，即使之后删除，也可能被 fork、缓存、GitHub Archive 留存。
 
 **修复（在首次公开推送前做）：**
@@ -365,7 +365,7 @@ Git 历史中的作者/提交者信息会随仓库公开：
 ```bash
 # 1) 只改写你自己的提交，保留上游作者归属
 cat > /tmp/mailmap.txt <<'EOF'
-Your Name <you@users.noreply.github.com> <qianduoduo@qianduoduodeMacBook-Air.local>
+Your Name <you@users.noreply.github.com> <user@userdeYourDevice.local>
 EOF
 
 git filter-repo --mailmap /tmp/mailmap.txt --force
@@ -667,7 +667,7 @@ git ls-files | grep -iE '\.env|\.ds_store|\.pem|\.key|secret|token'
 **不合规项（必须先修复）：**
 
 1. **PDF 原件在选中时被完整上传**（`drafts.ts:80`），与“PDF 只在本地处理”的承诺冲突，且移除附件时服务端文件可能残留；
-2. **Git 提交身份泄露个人邮箱和设备名**（`钱多多 <qianduoduo@...MacBook-Air.local>`）；
+2. **Git 提交身份泄露个人邮箱和设备名**（`YourName <user@...YourDevice.local>`）；
 3. **依赖存在 1 high + 9 moderate 漏洞**，其中 Mermaid 的 HTML 注入与 `dangerouslySetInnerHTML` + `localStorage` Key 形成可被利用的链路。
 
 **总体评价：** 代码没有恶意行为，架构上的数据流是“浏览器 ↔ DeepSeek”的单向直连，这一点是干净的；主要问题集中在 **一个未被披露的 PDF 上传副作用**、**Git 元数据隐私** 和 **依赖/纵深防御**。完成 P0 三项后，可以安全开源；P1 完成后，隐私说明与你的实际行为一致，审计结论可从“有条件通过”提升为“通过”。
