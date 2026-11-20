@@ -1,0 +1,130 @@
+.container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.listArea {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.scroller {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-color: var(--scroll-color) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.item {
+  box-sizing: border-box;
+  width: calc(var(--message-list-max-width) - 2 * var(--message-list-padding-horizontal));
+  max-width: calc(100% - 40px);
+  margin: 0 auto;
+}
+
+.documentPartialWarning {
+  margin: 10px 0 0;
+  padding: 7px 11px;
+  border: 1px solid rgba(207, 154, 32, 0.42);
+  border-radius: 8px;
+  background-color: rgba(250, 204, 21, 0.13);
+  color: #8a6200;
+  font-size: 12px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+}
+
+[data-ds-dark-theme] .documentPartialWarning {
+  border-color: rgba(250, 204, 21, 0.3);
+  background-color: rgba(250, 204, 21, 0.09);
+  color: #f0d477;
+}
+
+.documentNotice {
+  width: fit-content;
+  max-width: min(100%, 560px);
+  margin: 10px auto 2px;
+  padding: 6px 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 12px;
+  background-color: var(--dsw-alias-bg-layer-2);
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.bottomSpacer {
+  height: 24px;
+}
+
+/* 用户上滑超过 300px 后出现；点击平滑回到底部。 */
+.scrollToBottom {
+  position: absolute;
+  right: 24px;
+  bottom: 16px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 50%;
+  background-color: var(--dsw-alias-bg-layer-3);
+  color: var(--dsw-alias-label-primary);
+  box-shadow: var(--dsw-shadow-lv3, 0 4px 12px rgba(0, 0, 0, 0.08));
+  cursor: pointer;
+  transition: background-color var(--ds-transition-duration) var(--ds-ease-in-out);
+
+  &:hover {
+    background-color: var(--dsw-alias-interactive-bg-hover);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--dsw-alias-brand-primary);
+  }
+}
+
+/* 搜索跳转后的短暂高亮；由 MessageList 直接添加/移除，避免额外的 React 状态。 */
+.searchHitFlash {
+  border-radius: 12px;
+  animation: messageSearchHitFlash 2.4s ease-out;
+}
+
+@keyframes messageSearchHitFlash {
+  0%,
+  18% {
+    background-color: var(--dsw-alias-button-ghost-active-hover);
+    box-shadow: 0 0 0 6px var(--dsw-alias-button-ghost-active-hover);
+  }
+
+  100% {
+    background-color: transparent;
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+@media not all and (min-width: 768px) {
+  .scroller {
+    scrollbar-gutter: auto;
+  }
+
+  .scrollToBottom {
+    right: 16px;
+    bottom: 12px;
+    width: 44px;
+    height: 44px;
+  }
+}

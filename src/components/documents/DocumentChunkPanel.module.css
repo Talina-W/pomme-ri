@@ -1,0 +1,170 @@
+.panel {
+  display: flex;
+  animation: panelIn 160ms ease;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 16px;
+  margin-bottom: 8px;
+  background-color: var(--dsw-alias-bg-layer-2);
+  cursor: default;
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.edgeToggle {
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 44px;
+  padding: 0;
+  transform: translateY(-50%);
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-right: 0;
+  border-radius: 8px 0 0 8px;
+  background-color: var(--dsw-specific-input-major);
+  color: var(--dsw-alias-label-tertiary);
+  cursor: pointer;
+  animation: edgeIn 160ms ease;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease;
+}
+
+.edgeToggle:hover {
+  background-color: var(--dsw-alias-bg-layer-2);
+  color: var(--dsw-alias-label-primary);
+}
+
+.edgeToggle:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 1px;
+}
+
+.edgeToggle svg {
+  width: 14px;
+  height: 14px;
+}
+
+@keyframes edgeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.title {
+  flex-shrink: 0;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary);
+}
+
+.fileName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.meta,
+.status {
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.status {
+  color: var(--dsw-alias-label-primary);
+  overflow-wrap: anywhere;
+}
+
+.progressTrack {
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background-color: var(--dsw-alias-border-l2);
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--dsw-alias-brand-primary);
+  transition: width 0.2s ease;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.summary {
+  flex: 1;
+  min-width: 160px;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 18px;
+
+  > summary {
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.summaryBody {
+  max-height: 180px;
+  margin-top: 6px;
+  padding: 8px 10px;
+  overflow-y: auto;
+  border-radius: 8px;
+  background-color: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  cursor: text;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .edgeToggle {
+    animation: none;
+  }
+
+  .edgeToggle {
+    transition: none;
+  }
+}
